@@ -3,11 +3,13 @@ package com.dimachy.API.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table (name = "users")
 public class UserEntity {
         @Id
@@ -20,4 +22,6 @@ public class UserEntity {
         private String number;
         private String login;
         private String password;
+        private String email;
+        private int age;
 }

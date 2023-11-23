@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class UserResponseDTO {
+public class UserDTO {
     private Long userId;
     private String firstName;
     private String secondName;
@@ -14,5 +14,6 @@ public class UserResponseDTO {
     private int age;
     private String number;
     private String login;
-
+    private String password;
+    private String email;
 }
