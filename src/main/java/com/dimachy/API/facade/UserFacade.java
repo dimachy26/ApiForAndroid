@@ -5,19 +5,17 @@ import com.dimachy.API.entity.UserEntity;
 import com.dimachy.API.exception.AuthorizationException;
 import com.dimachy.API.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.client.HttpClientErrorException;
+
 
 import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class UserFacade {
 
     private final UserRepository userRepository;
+
     public UserDTO login(UserEntity user) {
         Optional<UserEntity> existingUser = userRepository.findByLogin(user.getLogin());
 

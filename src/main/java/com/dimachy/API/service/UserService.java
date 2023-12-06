@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -35,19 +36,40 @@ public class UserService {
             return new RegistrationResponse(false, duplicateFields);
         }
 
-            UserEntity response = UserEntity.builder()
-                    .firstName(dto.getFirstName())
-                    .secondName(dto.getSecondName())
-                    .lastName(dto.getLastName())
-                    .birthdate(dto.getBirthdate())
-                    .email(dto.getEmail())
-                    .number(dto.getNumber())
-                    .login(dto.getLogin())
-                    .password(dto.getPassword())
-                    .age(Period.between(dto.getBirthdate(), LocalDate.now()).getYears())
-                    .build();
-            userRepository.save(response);
+        UserEntity response = UserEntity.builder()
+                .firstName(dto.getFirstName())
+                .secondName(dto.getSecondName())
+                .lastName(dto.getLastName())
+                .birthdate(dto.getBirthdate())
+                .email(dto.getEmail())
+                .number(dto.getNumber())
+                .login(dto.getLogin())
+                .password(dto.getPassword())
+                .age(Period.between(dto.getBirthdate(), LocalDate.now()).getYears())
+                .build();
+        userRepository.save(response);
 
-            return new RegistrationResponse(true, null);
+        return new RegistrationResponse(true, null);
+
+    }
+
+    public void updateUserData(Long userId, UserDTO updatedUserData) {
+        Optional<UserEntity> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+            UserEntity userEntity = userOptional.get();
+            userEntity.setFirstName(updatedUserData.getFirstName());
+            userEntity.setSecondName(updatedUserData.getSecondName());
+            userEntity.setLastName(updatedUserData.getLastName());
+            userEntity.setBirthdate(updatedUserData.getBirthdate());
+            userEntity.setNumber(updatedUserData.getNumber());
+            userEntity.setEmail(updatedUserData.getEmail());
+            userEntity.setAge(Period.between(updatedUserData.getBirthdate(), LocalDate.now()).getYears());
+
+            userRepository.save(userEntity);
+        } else {
+            // Обработка случая, когда пользователь с указанным ID не найден
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
     }
 }
