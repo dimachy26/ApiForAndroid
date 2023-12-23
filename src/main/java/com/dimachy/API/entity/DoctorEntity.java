@@ -2,29 +2,23 @@ package com.dimachy.API.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "users", schema = "hospital")
-public class UserEntity {
+@Table(name = "doctors", schema = "hospital")
+public class DoctorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long doctorId;
     private String firstName;
     private String secondName;
     private String lastName;
+    private String healthPosition;
     @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDate birthdate;
-    private String number;
-    private String login;
-    private String password;
-    private String email;
-    private int age;
+    private int seniority;
 }
